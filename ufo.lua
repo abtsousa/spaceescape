@@ -4,11 +4,19 @@ function ufo_init()
   u={}
   u.x=60
   u.y=0
+  u.w=8
+  u.h=8
+  u.dx=1
   spawned_shot = false
   shots_setup()
 end
 
 function ufo_update()
+
+  if (u.x<0 or u.x>112) u.dx *=-1
+  u.x += u.dx
+  if (check_col(u)) gameover_init()
+
   if (stat(52)%4 != 0) then spawned_shot = false
   elseif (not spawned_shot) then
     make_shot(p.x+4,p.y+4)
@@ -17,8 +25,12 @@ function ufo_update()
   
   for s in all(shots) do
     update_shot(s)
-    if (check_col(s)) p.sprite=5 --TODO GAME OVER 
+    if (check_col(s)) gameover_init() 
   end
+end
+
+function gameover_ufo_update()
+  foreach(shots,update_shot)
 end
 
 function ufo_draw()
