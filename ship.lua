@@ -38,3 +38,7 @@ end
 function ship_draw()
   spr(p.sprite,p.x,p.y)
 end
+
+function check_col(obj)
+	return not (p.x>obj.x+obj.w or p.y>obj.y+obj.h or p.x+p.w<obj.x or p.y+p.h<obj.y)
+end
