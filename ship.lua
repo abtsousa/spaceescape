@@ -1,27 +1,40 @@
-SHIP_SPEED=5
-
 function ship_init()
-  SHIP={}
-  SHIP.x=60
-  SHIP.y=112
-  SHIP.dx=0
-  SHIP.dy=0
-  SHIP.sprite=1
-  SHIP.alive=true
+  p={}
+  p.x=60     -- x coordinate
+  p.y=112    -- y coordinate
+  p.w=8      -- width
+  p.h=8      -- height
+  p.dx=0     -- instant delta x
+  p.dy=0     -- instant delta y
+  p.maxsp=3  -- max speed
+  p.acc=1    -- acceleration
+  p.drg=0.85 -- drag (friction)
+  p.sprite=1
+  p.alive=true
 end
 
 function ship_update()
-  if (btnp(2)) then SHIP.dy=-SHIP_SPEED
-  elseif (btnp(3)) then SHIP.dy=SHIP_SPEED
-  else SHIP.dy=0 end
-  if (btnp(0)) then SHIP.dx=-SHIP_SPEED
-  elseif (btnp(1)) then SHIP.dx=SHIP_SPEED
-  else SHIP.dx=0 end
+  if (btn(0)) p.dx-=p.acc
+  if (btn(1)) p.dx+=p.acc
+  if (btn(2)) p.dy-=p.acc
+  if (btn(3)) p.dy+=p.acc
 
-  SHIP.x+=SHIP.dx
-  SHIP.y+=SHIP.dy
+  p.dx=mid(-p.maxsp,p.dx,p.maxsp)
+  p.dy=mid(-p.maxsp,p.dy,p.maxsp)
+
+  if (abs(p.dx)>0) p.dx*=p.drg
+  if (abs(p.dy)>0) p.dy*=p.drg
+  if (abs(p.dx)<0.02) p.dx=0
+  if (abs(p.dy)<0.02) p.dy=0
+
+  p.x=mid(0,p.x+p.dx,128-p.w)
+  p.y=mid(0,p.y+p.dy,128-p.h)
+
+  if (p.dx>1) then p.sprite=3
+  elseif (p.dx<-1) then p.sprite=2
+  else p.sprite=1 end
 end
 
 function ship_draw()
-  spr(SHIP.sprite,SHIP.x,SHIP.y)
+  spr(p.sprite,p.x,p.y)
 end
