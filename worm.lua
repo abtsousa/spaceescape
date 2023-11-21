@@ -1,20 +1,20 @@
 WORM_SPEED = 3
 
 function worm_init()
+  w_count=0
   worm={}
   make_worm()
 end
 
 function worm_update()
-  if (#worm < 8 and #worm>=1 and stat(50)%8!=worm[#worm].tick) make_worm()
+  if (#worm < 8) then
+    w_count+=1;
+    if (w_count%3) make_worm()
+  end
+  move_worm(worm[1])
   for worm_i,w in ipairs(worm) do
-    move_worm(w)
-    if (stat(50)%8 != w.tick) then w.changedir=false
-    elseif (not w.changedir) then
-      update_worm_direction(worm_i,w)
-      w.changedir=true
-    end
     if (check_col(w)) gameover_init()
+    update_worm_direction(worm_i,w)
   end
 end
 
@@ -28,8 +28,6 @@ function make_worm()
   w.y = 128
   w.w = 8
   w.h = 8
-  w.tick = stat(50)%8
-  w.changedir = false
   update_worm_direction(#worm+1,w)
   add(worm,w)
 end
@@ -40,8 +38,13 @@ function move_worm(w)
 end
 
 function update_worm_direction(i,w)
-  if (i == 1) then update_worm_direction_xy(w,p.x,p.y) -- worm head
-  else w.dx,w.dy = worm[1].dx, worm[1].dy end -- worm body
+  if (i == 1) then --head 
+    if (stat(50)%8 != 0) then w.changedir=false
+    elseif (not w.changedir) then
+      update_worm_direction_xy(w,p.x,p.y) -- worm head
+      w.changedir=true
+    end
+  else w.x,w.y = worm[i-1].x, worm[i-1].y end --update_worm_direction_xy(w,worm[1].x,worm[1].y) -- worm body
 end
 
 function update_worm_direction_xy(w,px,py)
