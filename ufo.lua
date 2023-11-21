@@ -38,6 +38,10 @@ function ufo_draw()
   foreach(shots,draw_shot)
 end
 
+function ufo_delete()
+  u={}
+end
+
 function shots_setup()
   shots={}
 end
