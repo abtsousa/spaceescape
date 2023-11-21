@@ -6,20 +6,20 @@ function ufo_init()
   u.y=0
   u.w=8
   u.h=8
-  u.dx=(114/480)*2
+  u.dx=(121/480)*2
   spawned_shot = false
   shots_setup()
 end
 
 function ufo_update()
 
-  if (u.x<0 or u.x>113) u.dx *=-1
+  if (u.x<0 or u.x>120) u.dx *=-1
   u.x += u.dx
   if (check_col(u)) gameover_init()
 
   if (stat(52)%4 != 0) then spawned_shot = false
   elseif (not spawned_shot) then
-    --make_shot(p.x+4,p.y+4)
+    make_shot(p.x+4,p.y+4)
     spawned_shot = true
   end
   
@@ -57,7 +57,7 @@ end
 function update_shot(s)
   s.x+=s.dx * SHOT_SPEED
   s.y+=s.dy * SHOT_SPEED
-  if (s.y<-8 or s.y > 120 or s.x<-8 or s.x > 120) del(shots,s)
+  if (s.y<-8 or s.y > 128 or s.x<-8 or s.x > 128) del(shots,s)
 end
 
 function draw_shot(s)

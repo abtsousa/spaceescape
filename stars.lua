@@ -1,7 +1,7 @@
 function stars_init()
   --variables
   STARS={}
-  STAR_COLS={1,2,5,6,7,12}
+  STAR_COLS={1,5,6,7,12}
   WARP_FACTOR=3
 
   --create stars

@@ -1,7 +1,7 @@
 function ship_init()
   p={}
   p.x=60     -- x coordinate
-  p.y=112    -- y coordinate
+  p.y=100    -- y coordinate
   p.w=8      -- width
   p.h=8      -- height
   p.dx=0     -- instant delta x
@@ -41,4 +41,17 @@ end
 
 function check_col(obj)
 	return not (p.x>obj.x+obj.w or p.y>obj.y+obj.h or p.x+p.w<obj.x or p.y+p.h<obj.y)
+end
+
+function check_col_radius(obj)
+  return (
+    check_col_radius_2(p.x,p.y,obj.x,obj.y,obj.r)
+    or check_col_radius_2(p.x+p.w,p.y,obj.x,obj.y,obj.r)
+    or check_col_radius_2(p.x,p.y+p.h,obj.x,obj.y,obj.r)
+    or check_col_radius_2(p.x+p.w,p.y+p.h,obj.x,obj.y,obj.r)
+  )
+end
+
+function check_col_radius_2(obj1x,obj1y,obj2x,obj2y,radius)
+  return sqrt((obj1x-obj2x)^2+(obj1y-obj2y)^2)<=radius
 end
