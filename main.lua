@@ -65,13 +65,14 @@ end
 
 function gameover_draw()
   cls()
-  stars_draw()
+  game_draw()
+--[[  stars_draw()
   ship_draw()
   if (spawn_ufo) ufo_draw()
   if (spawn_firework) firework_draw()
   if (spawn_tesla) tesla_draw()
   if (spawn_beam) beam_draw()
-  if (spawn_worm) worm_draw()
+  if (spawn_worm) worm_draw()]]--
   print("game over",44,55)
   print("press ❎ to restart",24,61)
 end

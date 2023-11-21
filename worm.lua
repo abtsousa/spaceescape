@@ -1,25 +1,36 @@
-WORM_SPEED = 3
+WORM_SPEED = 2
+WORM_SIZE = 16
+local prev_tick, changedir
 
 function worm_init()
-  w_count=0
-  worm={}
-  make_worm()
+  changedir=false
+  prev_tick=stat(50)%8
+  worm={} --worm body
+  make_wormhead()
+  for i=1,WORM_SIZE,1 do
+    add(worm,make_worm())
+  end
 end
 
 function worm_update()
-  if (#worm < 8) then
-    w_count+=1;
-    if (w_count%3) make_worm()
+  move_wormhead()
+  update_wormhead_direction()
+  if (prev_tick!=(stat(56)/15)%WORM_SIZE) then
+    move_worm(prev_tick%WORM_SIZE)
+    prev_tick=(stat(56)/15)%WORM_SIZE
   end
-  move_worm(worm[1])
-  for worm_i,w in ipairs(worm) do
-    if (check_col(w)) gameover_init()
-    update_worm_direction(worm_i,w)
-  end
+  if (check_col(worm_head)) gameover_init()
+  for w in all(worm) do if(check_col(w)) gameover_init() end
 end
 
 function worm_draw()
   foreach(worm,draw_worm)
+  draw_worm(worm_head)
+end
+
+function make_wormhead()
+  worm_head=make_worm()
+  update_wormhead_direction()
 end
 
 function make_worm()
@@ -28,23 +39,25 @@ function make_worm()
   w.y = 128
   w.w = 8
   w.h = 8
-  update_worm_direction(#worm+1,w)
-  add(worm,w)
+  return w
 end
 
-function move_worm(w)
-  w.x += w.dx
-  w.y += w.dy
+function move_wormhead()
+  worm_head.x += worm_head.dx
+  worm_head.y += worm_head.dy
 end
 
-function update_worm_direction(i,w)
-  if (i == 1) then --head 
-    if (stat(50)%8 != 0) then w.changedir=false
-    elseif (not w.changedir) then
-      update_worm_direction_xy(w,p.x,p.y) -- worm head
-      w.changedir=true
-    end
-  else w.x,w.y = worm[i-1].x, worm[i-1].y end --update_worm_direction_xy(w,worm[1].x,worm[1].y) -- worm body
+function move_worm(tick)
+  worm[tick+1].x = worm_head.x
+  worm[tick+1].y = worm_head.y
+end
+
+function update_wormhead_direction()
+  if (stat(56)%8 != 0) then changedir=false
+  elseif (not changedir) then
+    update_worm_direction_xy(worm_head,p.x,p.y) -- worm head
+    changedir=true
+  end
 end
 
 function update_worm_direction_xy(w,px,py)
