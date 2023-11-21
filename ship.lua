@@ -40,18 +40,22 @@ function ship_draw()
 end
 
 function check_col(obj)
-	return not (p.x>obj.x+obj.w or p.y>obj.y+obj.h or p.x+p.w<obj.x or p.y+p.h<obj.y)
+  return check_col_xy(obj.x,obj.y,obj.w,obj.h)
+end
+
+function check_col_xy(objx,objy,objw,objh)
+	return not (p.x>objx+objw or p.y>objy+objh or p.x+p.w<objx or p.y+p.h<objy)
 end
 
 function check_col_radius(obj)
   return (
-    check_col_radius_2(p.x,p.y,obj.x,obj.y,obj.r)
-    or check_col_radius_2(p.x+p.w,p.y,obj.x,obj.y,obj.r)
-    or check_col_radius_2(p.x,p.y+p.h,obj.x,obj.y,obj.r)
-    or check_col_radius_2(p.x+p.w,p.y+p.h,obj.x,obj.y,obj.r)
+    check_col_radius_xy(p.x,p.y,obj.x,obj.y,obj.r)
+    or check_col_radius_xy(p.x+p.w,p.y,obj.x,obj.y,obj.r)
+    or check_col_radius_xy(p.x,p.y+p.h,obj.x,obj.y,obj.r)
+    or check_col_radius_xy(p.x+p.w,p.y+p.h,obj.x,obj.y,obj.r)
   )
 end
 
-function check_col_radius_2(obj1x,obj1y,obj2x,obj2y,radius)
+function check_col_radius_xy(obj1x,obj1y,obj2x,obj2y,radius)
   return sqrt((obj1x-obj2x)^2+(obj1y-obj2y)^2)<=radius
 end

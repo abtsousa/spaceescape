@@ -1,5 +1,5 @@
 function director_init()
-  music(1)
+  music(8)
   spawn_ufo=false
   spawn_firework=false
   spawn_tesla=false

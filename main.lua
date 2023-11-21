@@ -27,6 +27,7 @@ function game_update()
   director_update()
   if (spawn_ufo) ufo_update()
   if (spawn_firework) firework_update()
+  if (spawn_tesla) tesla_update()
 end
 
 function game_draw()
@@ -35,6 +36,7 @@ function game_draw()
   ship_draw()
   if (spawn_ufo) ufo_draw()
   if (spawn_firework) firework_draw()
+  if (spawn_tesla) tesla_draw()
   print(stat(54),3,3)
   print(stat(46),3,9)
   print(stat(47),13,9)
@@ -52,7 +54,7 @@ function gameover_init()
 end
 
 function gameover_update()
-  p.sprite=5
+  p.sprite=16
   gameover_ufo_update()
   if (btn(5)) game_init()
 end
@@ -63,6 +65,7 @@ function gameover_draw()
   ship_draw()
   if (spawn_ufo) ufo_draw()
   if (spawn_firework) firework_draw()
+  if (spawn_tesla) tesla_draw()
   print("game over",44,55)
   print("press ❎ to restart",24,61)
 end

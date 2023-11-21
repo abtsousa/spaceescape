@@ -54,7 +54,7 @@ function explode_fireshot(f)
 end
 
 function draw_fireshot(f)
-  spr(11,f.x,f.y)
+  spr(5,f.x,f.y)
 end
 
 function draw_explosion(e)

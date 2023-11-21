@@ -1,5 +1,7 @@
 SHOT_SPEED=3
 
+local spawned_shot --DEBUG
+
 function ufo_init()
   u={}
   u.x=0
