@@ -51,15 +51,17 @@ function game_draw()
 end
 
 function gameover_init()
-  update = gameover_update
-  draw = gameover_draw
-  sfx(34)
-  music(60)
+  if (not btn(4)) then --DEBUG GOD MODE
+    update = gameover_update
+    draw = gameover_draw
+    sfx(34)
+    music(60)
+  end
 end
 
 function gameover_update()
   p.sprite=16
-  gameover_ufo_update()
+  --gameover_ufo_update()
   if (btn(5)) game_init()
 end
 
@@ -73,6 +75,33 @@ function gameover_draw()
   if (spawn_tesla) tesla_draw()
   if (spawn_beam) beam_draw()
   if (spawn_worm) worm_draw()]]--
-  print("game over",44,55)
-  print("press ❎ to restart",24,61)
+  print_center("game over",55)
+  print_center("press ❎ to restart",61)
+end
+
+function gamewon_init()
+  update = gamewon_update
+  draw = gamewon_draw
+  win_init()
+end
+
+function gamewon_update()
+  if (btn(5)) game_init()
+  stars_update()
+  ship_update()
+  win_update()
+end
+
+function gamewon_draw()
+  cls()
+  stars_draw()
+  ship_draw()
+  win_draw()
+  print_center("you won!!",55)
+  print_center("press ❎ to restart",61)
+end
+
+function print_center(string,y)
+  local x = 5*(#string)
+  print(string,64-x/2,y)
 end

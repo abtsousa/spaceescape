@@ -15,17 +15,17 @@ end
 function worm_update()
   move_wormhead()
   update_wormhead_direction()
-  if (prev_tick!=(stat(56)/15)%WORM_SIZE) then
-    move_worm(prev_tick%WORM_SIZE)
-    prev_tick=(stat(56)/15)%WORM_SIZE
+  if (prev_tick!=flr(stat(56)/5)%WORM_SIZE) then
+    prev_tick=flr(stat(56)/5)%WORM_SIZE
+    move_worm(prev_tick)
   end
   if (check_col(worm_head)) gameover_init()
   for w in all(worm) do if(check_col(w)) gameover_init() end
 end
 
 function worm_draw()
-  foreach(worm,draw_worm)
-  draw_worm(worm_head)
+  for i=1,WORM_SIZE,1 do draw_worm(worm[(prev_tick+i)%WORM_SIZE+1]) end
+  spr(14,worm_head.x,worm_head.y)
 end
 
 function make_wormhead()
@@ -53,7 +53,7 @@ function move_worm(tick)
 end
 
 function update_wormhead_direction()
-  if (stat(56)%8 != 0) then changedir=false
+  if (stat(50)%8 != 0) then changedir=false
   elseif (not changedir) then
     update_worm_direction_xy(worm_head,p.x,p.y) -- worm head
     changedir=true
