@@ -59,6 +59,7 @@ function game_update()
   if (spawn_tesla) tesla_update()
   if (spawn_beam) beam_update()
   if (spawn_worm) worm_update()
+  score = (stat(54)-1)*480+stat(56)
 end
 
 function game_draw()
@@ -71,6 +72,7 @@ function game_draw()
   if (spawn_beam) beam_draw()
   if (spawn_worm) worm_draw()
   --[[
+  print(tostr(flr(0.0080128205*((stat(54)-1)*480+stat(56)))).."%",90,9) --100/(480*26)
   print(stat(54),3,3)
   print(stat(46),3,9)
   print(stat(47),13,9)
@@ -109,7 +111,10 @@ function gameover_draw()
   if (spawn_worm) worm_draw()
   ]]--
   print_center("game over",55)
-  print_center("press ❎ to restart",61)
+  print_center("you scored: "..tostr(score),61)
+  local percentage = flr(0.0080128205*score).."%"
+  print_center("your progress:"..percentage,67,9)
+  print_center("press ❎ to restart",73)
 end
 
 function gamewon_init()
