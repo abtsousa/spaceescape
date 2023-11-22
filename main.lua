@@ -4,6 +4,7 @@
   - initial text
   - progress bar
   - fix tesla ray width/height
+  - worm eyes?
 ]]--
 -- https://gvituri.itch.io/space-shooter
 
