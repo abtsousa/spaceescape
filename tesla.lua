@@ -41,7 +41,7 @@ end
 function check_col_teslaray(t)
   if (t.active) then
     if (t.xray) then tx,ty = 0,t.r else tx,ty = t.r,0 end
-    if (check_col_xy(tx,ty,t.w,t.h)) gameover_init() 
+    if (check_col_xy(tx,ty,t.w,t.h)) ship_hit() 
   end
 end
 

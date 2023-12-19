@@ -32,7 +32,7 @@ function update_warning(b)
 end
 
 function update_beam(b)
-  if (check_col(b)) gameover_init()
+  if (check_col(b)) ship_hit()
   if (time()>b.time) del(beams,b)
 end
 

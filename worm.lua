@@ -19,12 +19,13 @@ function worm_update()
     prev_tick=flr(stat(56)/5)%WORM_SIZE
     move_worm(prev_tick)
   end
-  if (check_col(worm_head)) gameover_init()
-  for w in all(worm) do if(check_col(w)) gameover_init() end
+  if (check_col(worm_head)) ship_hit()
+  for w in all(worm) do if(check_col(w)) ship_hit() end
 end
 
 function worm_draw()
   for i=1,WORM_SIZE,1 do draw_worm(worm[(prev_tick+i)%WORM_SIZE+1]) end
+  --pd_rotate(worm_head.x+4,worm_head.y+4,atan2(worm_head.dy, worm_head.dx),0,0,1,false,1)
   spr(14,worm_head.x,worm_head.y)
 end
 
@@ -68,4 +69,16 @@ end
 
 function draw_worm(w)
   spr(15,w.x,w.y)
+end
+
+--123 tokens with scaling and arbitrary size
+function pd_rotate(x,y,rot,mx,my,w,flip,scale)
+  scale=scale or 1
+  local halfw, cx=scale*-w/2, mx + .5
+  local cy,cs,ss=my-halfw/scale,cos(rot)/scale,sin(rot)/scale
+  local sx, sy, hx, hy=cx+cs*halfw, cy+ss*halfw, w*(flip and -4 or 4)*scale, w*4*scale
+  for py=y-hy, y+hy do
+  tline(x-hx, py, x+hx, py, sx -ss*halfw, sy + cs*halfw, cs/8, ss/8)
+  halfw+=.125
+  end
 end

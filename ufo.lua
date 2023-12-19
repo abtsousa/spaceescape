@@ -17,7 +17,7 @@ function ufo_update()
 
   if (u.x<0 or u.x>120) u.dx *=-1
   u.x += u.dx
-  if (check_col(u)) gameover_init()
+  if (check_col(u)) ship_hit()
 
   if (stat(52)%4 != 0) then spawned_shot = false
   elseif (not spawned_shot) then
@@ -27,7 +27,7 @@ function ufo_update()
   
   for s in all(shots) do
     update_shot(s)
-    if (check_col(s)) gameover_init() 
+    if (check_col(s)) ship_hit() 
   end
 end
 

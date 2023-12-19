@@ -9,8 +9,11 @@ function ship_init()
   p.maxsp=3  -- max speed
   p.acc=1    -- acceleration
   p.drg=0.85 -- drag (friction)
-  p.sprite=1
+  p.sprite=PLAYERSPRITE
   p.alive=true
+  p.lives=3
+  p.invulnerable=false
+  p.invultime=0
 end
 
 function ship_update()
@@ -30,13 +33,27 @@ function ship_update()
   p.x=mid(0,p.x+p.dx,128-p.w)
   p.y=mid(0,p.y+p.dy,128-p.h)
 
-  if (p.dx>1) then p.sprite=3
-  elseif (p.dx<-1) then p.sprite=2
-  else p.sprite=1 end
+  if (p.dx>1) then p.sprite=PLAYERSPRITE+2
+  elseif (p.dx<-1) then p.sprite=PLAYERSPRITE+1
+  else p.sprite=PLAYERSPRITE end
+
+  if (p.invulnerable and time() > p.invultime) p.invulnerable = false
 end
 
 function ship_draw()
-  spr(p.sprite,p.x,p.y)
+  if (not p.alive or not p.invulnerable or stat(56)%2==0) spr(p.sprite,p.x,p.y)
+end
+
+function ship_hit()
+  if (not p.invulnerable) then
+    sfx(34)
+    p.lives = p.lives-1
+    if (p.lives==0) then gameover_init()
+    else
+      p.invulnerable = true
+      p.invultime=time()+1
+    end
+  end
 end
 
 function check_col(obj)

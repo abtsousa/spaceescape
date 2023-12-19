@@ -44,7 +44,7 @@ function update_fireshot(f)
 end
 
 function update_explosion(e)
-  if (check_col_radius(e)) gameover_init()
+  if (check_col_radius(e)) ship_hit()
   if (time()>e.time+0.2) del(explosions,e)
 end
 
