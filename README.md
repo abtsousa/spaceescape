@@ -16,4 +16,4 @@ Or save the cartridge image and load it in [PICO-8](https://www.lexaloffle.com/p
 
 ## License
 
-The source code is provided as-is, under the [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license. It is thus only available for non-commercial purposes.
+The source code is provided as-is, under the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license. It is thus only available for non-commercial purposes.
